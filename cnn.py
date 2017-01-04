@@ -226,14 +226,13 @@ def cnn(imagePath, model):
             collumn.append(row)
         maxpooled2[z] = np.asarray(collumn)
     maxpooled2 = np.asarray(maxpooled2)
-    print maxpooled2.shape
 
 
     """3 dimensies terugbrengen naar 2 dimensies"""
     flattened = maxpooled2.reshape(80, 5)
 
 
-    """fully connected layer 1""""
+    """fully connected layer 1"""
     fullyconnected1 = []
 
     print "--------------------------------------------------------\nhet convnet heeft er " + str(time.time() - starttime)+ "s over gedaan"
