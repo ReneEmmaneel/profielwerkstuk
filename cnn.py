@@ -65,6 +65,7 @@ def cnn(imagePath, model):
     """plaatje openen"""
     img = np.asarray(Image.open(imagePath))
 
+
     """3d plaatje omzetten naar een 2d array met alleen de kleurintensiteit (zwart-wit)"""
     input = []
     for y in xrange(0, 32):
@@ -73,6 +74,7 @@ def cnn(imagePath, model):
             row.append(max(img[y][x]))
         input.append(row)
     inputlayer = np.asarray(input)
+
 
     """eerste featuremaps creeeren. activatiefuncties worden ook meteen toegepast"""
     featuremap1 = [ [], [], [], [], [], [] ]
@@ -224,11 +226,15 @@ def cnn(imagePath, model):
             collumn.append(row)
         maxpooled2[z] = np.asarray(collumn)
     maxpooled2 = np.asarray(maxpooled2)
-
     print maxpooled2.shape
 
 
+    """3 dimensies terugbrengen naar 2 dimensies"""
+    flattened = maxpooled2.reshape(80, 5)
 
+
+    """fully connected layer 1""""
+    fullyconnected1 = []
 
     print "--------------------------------------------------------\nhet convnet heeft er " + str(time.time() - starttime)+ "s over gedaan"
 
