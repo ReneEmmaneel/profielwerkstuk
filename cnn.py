@@ -58,9 +58,10 @@ model = np.asarray([
 ])
 
 
-def cnn(imagePath, model):
+def cnn(imagePath, model, training=False):
 
-    starttime = time.time()
+    if(training):
+        starttime = time.time()
 
     """plaatje openen"""
     img = np.asarray(Image.open(imagePath))
@@ -121,6 +122,15 @@ def cnn(imagePath, model):
         maxpooled1[z] = np.asarray(collumn)
     maxpooled1 = np.asarray(maxpooled1)
 
+
+    """dropout 1 toepassen"""
+    if(training):
+        maxpooled1.flags.writeable = True
+        for z in xrange(0, 6):
+            for y in xrange(0, 14):
+                for x in xrange(0, 14):
+                    if np.random.rand() < 0.05 :
+                        maxpooled1[z][y][x] = 0
 
     """tweede featuremaps creeeren, activatiefuncties worden ook meteen toegepast"""
     featuremap2 = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []  ]
@@ -228,6 +238,16 @@ def cnn(imagePath, model):
     maxpooled2 = np.asarray(maxpooled2)
 
 
+    """dropout 2 toepassen"""
+    if(training):
+        maxpooled2.flags.writeable = True
+        for z in xrange(0, 16):
+            for y in xrange(0, 5):
+                for x in xrange(0, 5):
+                    if np.random.rand() < 0.05 :
+                        maxpooled2[z][y][x] = 0
+
+
     """3 dimensies terugbrengen naar 2 dimensies"""
     flattened = maxpooled2.reshape(80, 5)
 
@@ -235,8 +255,11 @@ def cnn(imagePath, model):
     """fully connected layer 1"""
     fullyconnected1 = []
 
-    print "--------------------------------------------------------\nhet convnet heeft er " + str(time.time() - starttime)+ "s over gedaan"
+
+
+    if(training):
+        print "--------------------------------------------------------\nhet convnet heeft er " + str(time.time() - starttime)+ "s over gedaan"
 
 
 
-cnn('dataset/0/img001-001.png', model)
+cnn('dataset/0/img001-001.png', model, True)
