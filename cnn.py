@@ -27,35 +27,39 @@ def normalize(array):
         for x in xrange(0, array.shape[0]):
             array[y][x] = (array[y][x] - low)*(255/dif)
     return array
+def generateModel():
+    return np.asarray([
 
-"""het door het cnn gebruikte model"""
-model = np.asarray([
-
-   [np.asarray(np.random.rand(25)),
-    np.asarray(np.random.rand(25)),
-    np.asarray(np.random.rand(25)),
-    np.asarray(np.random.rand(25)),
-    np.asarray(np.random.rand(25)),
-    np.asarray(np.random.rand(25))],
+       [np.asarray(np.random.rand(25)),
+        np.asarray(np.random.rand(25)),
+        np.asarray(np.random.rand(25)),
+        np.asarray(np.random.rand(25)),
+        np.asarray(np.random.rand(25)),
+        np.asarray(np.random.rand(25))],
 
 
-   [np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150)),
-    np.asarray(np.random.rand(150))]
-])
+       [np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150)),
+        np.asarray(np.random.rand(150))]
+    ])
+def benchmark(runs):
+    starttime = time.time()
+    for i in xrange(0, runs):
+        cnn('dataset/0/img001-001.png', generateModel(), True)
+    print "--------------------------------------------------------\nhet convnet heeft over "+str(runs)+" runs " + str(time.time() - starttime)+ "seconde over gedaan"
 
 
 def cnn(imagePath, model, training=False):
@@ -255,11 +259,4 @@ def cnn(imagePath, model, training=False):
     """fully connected layer 1"""
     fullyconnected1 = []
 
-
-
-    if(training):
-        print "--------------------------------------------------------\nhet convnet heeft er " + str(time.time() - starttime)+ "s over gedaan"
-
-
-
-cnn('dataset/0/img001-001.png', model, True)
+benchmark(5)
