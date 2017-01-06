@@ -74,9 +74,9 @@ def cnn(imagePath, model, training=False):
 
     """3d plaatje omzetten naar een 2d array met alleen de kleurintensiteit (zwart-wit)"""
     input = []
-    for y in xrange(0, 32):
+    for y in range(0, 32):
         row = []
-        for x in xrange(0, 32):
+        for x in range(0, 32):
             row.append(max(img[y][x]))
         input.append(row)
     inputlayer = np.asarray(input)
@@ -85,9 +85,9 @@ def cnn(imagePath, model, training=False):
     """eerste featuremaps creeeren. activatiefuncties worden ook meteen toegepast"""
     featuremap1 = [ [], [], [], [], [], [] ]
     convmodel1 = model[0]
-    for y in xrange(2, 30):
+    for y in range(2, 30):
         rows = [ [], [], [], [], [], [] ]
-        for x in xrange(2, 30):
+        for x in range(2, 30):
             receptivefield = np.asarray([
                 inputlayer[y-2][x-2], inputlayer[y-2][x-1], inputlayer[y-2][x], inputlayer[y-2][x+1], inputlayer[y-2][x+2],
                 inputlayer[y-1][x-2], inputlayer[y-1][x-1], inputlayer[y-1][x], inputlayer[y-1][x+1], inputlayer[y-1][x+2],
@@ -95,20 +95,20 @@ def cnn(imagePath, model, training=False):
                 inputlayer[y+1][x-2], inputlayer[y+1][x-1], inputlayer[y+1][x], inputlayer[y+1][x+1], inputlayer[y+1][x+2],
                 inputlayer[y+2][x-2], inputlayer[y+2][x-1], inputlayer[y+2][x], inputlayer[y+2][x+1], inputlayer[y+2][x+2],
             ])
-            for i in xrange(0, 6):
+            for i in range(0, 6):
                 rows[i].append(max(0, np.sum(np.multiply(receptivefield, convmodel1[i]))))
-        for h in xrange(0, 6):
+        for h in range(0, 6):
             featuremap1[h].append(rows[h])
     featuremap1 = np.asarray(featuremap1)
 
 
     """maxpooling toepassen op alle 6 featuremaps"""
     maxpooled1 = [ [], [], [], [], [], [] ]
-    for z in xrange(0, 6):
+    for z in range(0, 6):
         collumn = []
-        for y in xrange(0, 28, 2):
+        for y in range(0, 28, 2):
             row = []
-            for x in xrange(0, 28, 2):
+            for x in range(0, 28, 2):
                 row.append(max([featuremap1[z][y][x], featuremap1[z][y][x+1], featuremap1[z][y+1][x], featuremap1[z][y+1][x+1]]))
             collumn.append(row)
         maxpooled1[z] = np.asarray(collumn)
@@ -118,18 +118,18 @@ def cnn(imagePath, model, training=False):
     """dropout 1 toepassen"""
     if(training):
         maxpooled1.flags.writeable = True
-        for z in xrange(0, 6):
-            for y in xrange(0, 14):
-                for x in xrange(0, 14):
+        for z in range(0, 6):
+            for y in range(0, 14):
+                for x in range(0, 14):
                     if np.random.rand() < 0.05 :
                         maxpooled1[z][y][x] = 0
 
     """tweede featuremaps creeeren, activatiefuncties worden ook meteen toegepast"""
     featuremap2 = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []  ]
     convmodel2 = model[1]
-    for y in xrange(2, 12):
+    for y in range(2, 12):
         rows = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []  ]
-        for x in xrange(2, 12):
+        for x in range(2, 12):
             receptivefield = np.asarray([
                 maxpooled1[0][y-2][x-2], maxpooled1[0][y-2][x-1], maxpooled1[0][y-2][x], maxpooled1[0][y-2][x+1], maxpooled1[0][y-2][x+2],
                 maxpooled1[0][y-1][x-2], maxpooled1[0][y-1][x-1], maxpooled1[0][y-1][x], maxpooled1[0][y-1][x+1], maxpooled1[0][y-1][x+2],
@@ -167,20 +167,20 @@ def cnn(imagePath, model, training=False):
                 maxpooled1[5][y+1][x-2], maxpooled1[5][y+1][x-1], maxpooled1[5][y+1][x], maxpooled1[5][y+1][x+1], maxpooled1[5][y+1][x+2],
                 maxpooled1[5][y+2][x-2], maxpooled1[5][y+2][x-1], maxpooled1[5][y+2][x], maxpooled1[5][y+2][x+1], maxpooled1[5][y+2][x+2],
             ])
-            for i in xrange(0, 16):
+            for i in range(0, 16):
                     rows[i].append(max(0, np.sum(np.multiply(receptivefield, convmodel2[i]))))
-        for h in xrange(0, 16):
+        for h in range(0, 16):
             featuremap2[h].append(rows[h])
     featuremap2 = np.asarray(featuremap2)
 
 
     """maxpooling toepassen op alle 16 featuremaps"""
     maxpooled2 = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []  ]
-    for z in xrange(0, 16):
+    for z in range(0, 16):
         collumn = []
-        for y in xrange(0, 10, 2):
+        for y in range(0, 10, 2):
             row = []
-            for x in xrange(0, 10, 2):
+            for x in range(0, 10, 2):
                 row.append(max([featuremap2[z][y][x], featuremap2[z][y][x+1], featuremap2[z][y+1][x], featuremap2[z][y+1][x+1]]))
             collumn.append(row)
         maxpooled2[z] = np.asarray(collumn)
@@ -190,9 +190,9 @@ def cnn(imagePath, model, training=False):
     """dropout 2 toepassen"""
     if(training):
         maxpooled2.flags.writeable = True
-        for z in xrange(0, 16):
-            for y in xrange(0, 5):
-                for x in xrange(0, 5):
+        for z in range(0, 16):
+            for y in range(0, 5):
+                for x in range(0, 5):
                     if np.random.rand() < 0.05 :
                         maxpooled2[z][y][x] = 0
 
@@ -205,4 +205,4 @@ def cnn(imagePath, model, training=False):
     fullyconnected1 = []
 
 
-benchmark(10)
+benchmark(100)
