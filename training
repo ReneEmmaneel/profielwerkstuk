@@ -38,7 +38,7 @@ def train(alpha, totalGeneration, inputPerWeight, modelfile, metadatafile, input
     Kernels1 = EndKernels1
     EndKernels2 = np.zeros((6,9))
     Kernels2 = EndKernels2
-    Endweights = 2 * np.random.random_sample((1296, 36)) - 1
+    Endweights = 2 * np.random.random_sample((400 + 1, len(lettersArray))) - 1 #+1 is voor de bias
     weights = Endweights
     
     #importen van oude training (werk ik later wel aan)
