@@ -188,21 +188,29 @@ def cnn(imagePath, model, training=False):
 
 
     """dropout 2 toepassen"""
-    if(training):
+    """if(training):
         maxpooled2.flags.writeable = True
         for z in range(0, 16):
             for y in range(0, 5):
                 for x in range(0, 5):
                     if np.random.rand() < 0.05 :
-                        maxpooled2[z][y][x] = 0
+                        maxpooled2[z][y][x] = 0"""
+    #ik weet niet hoe dropuit werkt met backprog xD, voeg ik later wel toe, eerst maar eventjes zonder
 
 
     """3 dimensies terugbrengen naar 1 dimensie"""
     flattened = maxpooled2.reshape(400)
 
-
     """fully connected layer 1"""
+    inputfullyconnected = flattened
+    inputfullyconnected.append(1);
+    weights = model[2]
     fullyconnected1 = []
+    
+    for i in range flattened:
+        for j in range weights:
+            fullyconnected1[i] += flattened[i] * weights[i][j]
 
+    
 
 benchmark(100)
