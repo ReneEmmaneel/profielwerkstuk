@@ -8,7 +8,7 @@ import os.path
 print "start met trainen...."
 
 #training functie
-def train(alpha, totalGeneration, inputPerWeight, modelfile, metadatafile, inputTraining=""):
+def train(alpha, totalGeneration, modelfile, metadatafile, inputTraining=""):
     
     #ervoor zorgen dat data goed wordt weggeschreven
     with open(metadatafile, "w") as myfile:
@@ -105,7 +105,7 @@ def train(alpha, totalGeneration, inputPerWeight, modelfile, metadatafile, input
         #print ("genereren weights", time.time() - startTime)
         
         #subdataset genereren
-        gebruikteData = willekeurigeData(allData, inputPerWeight)
+        gebruikteData = willekeurigeData(allData, 1)
         
         #value berekenen
         print ('value berekenen', str(float(time.time()) - float(startTime))+ ".")
@@ -113,11 +113,14 @@ def train(alpha, totalGeneration, inputPerWeight, modelfile, metadatafile, input
         for i in xrange(len(gebruikteData)):
             """if i%40 == 0:
                 print ("starten input ", i, time.time() - startTime)"""
-            currValueArray[i] = cnn.cnn(Kernels1, Kernels2, weights, AllLabels[gebruikteData[i][1]], gebruikteData[i][0], startTime, False)
-        total = np.average(currValueArray)
+            outputData = cnn.cnn(Kernels1, Kernels2, weights, AllLabels[gebruikteData[i][1]], gebruikteData[i][0], startTime, False)
         
         #dtotal / dweight = dtotal / dout * dout / dnet * dnet / dweight
-        
+        dtotal = outputData[6]
+        dout = outputData[5] #dunno if 5, but whatev
+        for i in range(400){
+            dtotaldout = -1 * (dtotal[i] - dout[0]);
+        }
         
         
         
