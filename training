@@ -35,11 +35,8 @@ def train(alpha, totalGeneration, modelfile, metadatafile, inputTraining=""):
     #endkernels1 = uiteindelijke resultaat
     #kernels1 = huidige test
     EndKernels1 = np.zeros((6,25))
-    Kernels1 = EndKernels1
     EndKernels2 = np.zeros((6,9))
-    Kernels2 = EndKernels2
     Endweights = 2 * np.random.random_sample((400 + 1, len(lettersArray))) - 1 #+1 is voor de bias
-    weights = Endweights
     
     #importen van oude training (werk ik later wel aan)
     #if len(inputTraining) > 0:
@@ -116,10 +113,23 @@ def train(alpha, totalGeneration, modelfile, metadatafile, inputTraining=""):
             outputData = cnn.cnn(Kernels1, Kernels2, weights, AllLabels[gebruikteData[i][1]], gebruikteData[i][0], startTime, False)
         
         #dtotal / dweight = dtotal / dout * dout / dnet * dnet / dweight
-        dtotal = outputData[6]
-        dout = outputData[5] #dunno if 5, but whatev
-        for i in range(400){
-            dtotaldout = -1 * (dtotal[i] - dout[0]);
+        target = outputData[6] #dunno if 6, but whatev
+        out = outputData[5]
+        net = outputData[4]
+        weight = outputData[3]
+        outh2 = outputData[2]
+        
+        
+        for i in range(len(endWeights[0])){
+            dtotaldout = -1 * (target[i] - out[i]);
+            #out = net -> afgeleide = 1, dus deze stap overslaan
+            #dnet / dweight = out(hidden layer)
+            for j in range(len(endWeights) - 1){
+                dnetdweight = outh2[j]
+                dweight[i][j] = dtotaldout * dnetdweight
+            }
+            
+            
         }
         
         
