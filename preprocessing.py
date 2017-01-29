@@ -9,5 +9,3 @@ def preprocess(imgPath):
     img, (int((32 - img.size[0]) / 2), int((32 - img.size[1]) / 2))
     )
     container.save(imgPath)
-
-preprocess('test.jpg')

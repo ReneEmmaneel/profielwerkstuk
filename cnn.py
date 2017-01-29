@@ -2,31 +2,22 @@ import numpy as np
 from PIL import Image
 import time
 
-"""functies bedoeld voor het testen"""
-def imageFrom2D(array):
-    im = []
-    for y in xrange(0, array.shape[1]):
-        row = []
-        for x in xrange(0, array.shape[0]):
-            row.append([array[y][x], array[y][x], array[y][x]])
-        im.append(row)
-    return Image.fromarray(np.asarray(im, 'uint8'))
-def normalize(array):
-    array.flags.writeable = True
-    high = 0
-    low = 1000000
-    for y in xrange(0, array.shape[1]):
-        if max(array[y]) > high:
-            high = max(array[y])
-        if min(array[y]) < low:
-            low = min(array[y])
-    dif = high - low
-    if dif < 1:
-        dif = 1
-    for y in xrange(0, array.shape[1]):
-        for x in xrange(0, array.shape[0]):
-            array[y][x] = (array[y][x] - low)*(255/dif)
-    return array
+
+model = np.asarray([
+
+    [[-1, 0, 2, 0, -1, 0, -1, 3, -1, 0, 2, 3, 4, 3, 2, 0, -1, 3, -1, 0, -1, 0, 2, 0, -1],
+     [0, 0, 1, 0, 0, -2, 2, 3, 2, -2, 2, 1, -1, 1, 2, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0],
+     [0, -1, 3, -1, 0, 0, -1, 3, -1, 0, 0, -1, 3, -1, 0, 0, -1, 3, -1, 0, 0, -1, 3, -1, 0],
+     [0, 0, 0, 0, 0, -1, -1, -1, -1, -1, 3, 3, 3, 3, 3, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0],
+     [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 2, 1, -1, 1, 2, -2, 2, 3, 2, -2, 0, 0, 1, 0, 0],
+     [2, 1, -1, 1, 2, 1, 3, 1, 3, 1, -1, 1, 4, 1, -1, 1, 3, 1, 3, 1, 2, 1, -1, 1, 2]],
+
+    [
+    
+    ]
+
+])
+
 def generateModel():
     return np.asarray([
 
@@ -50,7 +41,7 @@ def benchmark(runs):
     for i in xrange(0, runs):
         cnn('dataset/0/img001-001.png', generateModel(), True)
     now = time.time()
-    print "----------------------------------------------------------\nhet convnet heeft over "+str(runs)+" runs " + str(now - starttime)+ "s over gedaan\ndit geeft een gemiddelde van " + str((now - starttime)/runs) + "s per run"
+    print "-----------------------------------------------\nhet convnet heeft over "+str(runs)+" runs " + str(now - starttime)+ "s over gedaan\ndit geeft een gemiddelde van " + str((now - starttime)/runs) + "s per run"
 
 
 def cnn(imagePath, model, training=False):
