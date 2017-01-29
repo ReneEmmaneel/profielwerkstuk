@@ -43,16 +43,6 @@ def generateModel():
         np.asarray(np.random.rand(150)),
         np.asarray(np.random.rand(150)),
         np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
         np.asarray(np.random.rand(150))]
     ])
 def benchmark(runs):
@@ -167,16 +157,16 @@ def cnn(imagePath, model, training=False):
                 maxpooled1[5][y+1][x-2], maxpooled1[5][y+1][x-1], maxpooled1[5][y+1][x], maxpooled1[5][y+1][x+1], maxpooled1[5][y+1][x+2],
                 maxpooled1[5][y+2][x-2], maxpooled1[5][y+2][x-1], maxpooled1[5][y+2][x], maxpooled1[5][y+2][x+1], maxpooled1[5][y+2][x+2],
             ])
-            for i in range(0, 16):
+            for i in range(0, 6):
                     rows[i].append(max(0, np.sum(np.multiply(receptivefield, convmodel2[i]))))
-        for h in range(0, 16):
+        for h in range(0, 6):
             featuremap2[h].append(rows[h])
     featuremap2 = np.asarray(featuremap2)
 
 
     """maxpooling toepassen op alle 16 featuremaps"""
-    maxpooled2 = [ [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []  ]
-    for z in range(0, 16):
+    maxpooled2 = [ [], [], [], [], [], [] ]
+    for z in range(0, 6):
         collumn = []
         for y in range(0, 10, 2):
             row = []
@@ -190,7 +180,7 @@ def cnn(imagePath, model, training=False):
     """dropout 2 toepassen"""
     if(training):
         maxpooled2.flags.writeable = True
-        for z in range(0, 16):
+        for z in range(0, 6):
             for y in range(0, 5):
                 for x in range(0, 5):
                     if np.random.rand() < 0.05 :
@@ -198,8 +188,7 @@ def cnn(imagePath, model, training=False):
 
 
     """3 dimensies terugbrengen naar 1 dimensie"""
-    flattened = maxpooled2.reshape(400)
-
+    flattened = maxpooled2.reshape(150)
 
     """fully connected layer 1"""
     fullyconnected1 = []
