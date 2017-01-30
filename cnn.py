@@ -1,45 +1,12 @@
 import numpy as np
 from PIL import Image
 import time
+import model
 
-
-model = np.asarray([
-
-    [[-1, 0, 2, 0, -1, 0, -1, 3, -1, 0, 2, 3, 4, 3, 2, 0, -1, 3, -1, 0, -1, 0, 2, 0, -1],
-     [0, 0, 1, 0, 0, -2, 2, 3, 2, -2, 2, 1, -1, 1, 2, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0],
-     [0, -1, 3, -1, 0, 0, -1, 3, -1, 0, 0, -1, 3, -1, 0, 0, -1, 3, -1, 0, 0, -1, 3, -1, 0],
-     [0, 0, 0, 0, 0, -1, -1, -1, -1, -1, 3, 3, 3, 3, 3, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0],
-     [0, 0, 0, 0, 0, 0, 0, -1, 0, 0, 2, 1, -1, 1, 2, -2, 2, 3, 2, -2, 0, 0, 1, 0, 0],
-     [2, 1, -1, 1, 2, 1, 3, 1, 3, 1, -1, 1, 4, 1, -1, 1, 3, 1, 3, 1, 2, 1, -1, 1, 2]],
-
-    [
-    
-    ]
-
-])
-
-def generateModel():
-    return np.asarray([
-
-       [np.asarray(np.random.rand(25)),
-        np.asarray(np.random.rand(25)),
-        np.asarray(np.random.rand(25)),
-        np.asarray(np.random.rand(25)),
-        np.asarray(np.random.rand(25)),
-        np.asarray(np.random.rand(25))],
-
-
-       [np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150)),
-        np.asarray(np.random.rand(150))]
-    ])
 def benchmark(runs):
     starttime = time.time()
     for i in xrange(0, runs):
-        cnn('dataset/0/img001-001.png', generateModel(), True)
+        cnn('dataset/0/img001-001.png', model.default(), True)
     now = time.time()
     print "-----------------------------------------------\nhet convnet heeft over "+str(runs)+" runs " + str(now - starttime)+ "s over gedaan\ndit geeft een gemiddelde van " + str((now - starttime)/runs) + "s per run"
 
@@ -149,7 +116,7 @@ def cnn(imagePath, model, training=False):
                 maxpooled1[5][y+2][x-2], maxpooled1[5][y+2][x-1], maxpooled1[5][y+2][x], maxpooled1[5][y+2][x+1], maxpooled1[5][y+2][x+2],
             ])
             for i in range(0, 6):
-                    rows[i].append(max(0, np.sum(np.multiply(receptivefield, convmodel2[i]))))
+                rows[i].append(max(0, np.sum(np.multiply(receptivefield, convmodel2[i]))))
         for h in range(0, 6):
             featuremap2[h].append(rows[h])
     featuremap2 = np.asarray(featuremap2)
