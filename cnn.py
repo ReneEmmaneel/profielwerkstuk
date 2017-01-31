@@ -69,7 +69,7 @@ def cnn(imagePath, model, training=False):
         for z in range(0, 6):
             for y in range(0, 14):
                 for x in range(0, 14):
-                    if np.random.rand() < 0.05 :
+                    if np.random.rand() < 0.10 :
                         maxpooled1[z][y][x] = 0
 
     """tweede featuremaps creeeren, activatiefuncties worden ook meteen toegepast"""
@@ -141,7 +141,7 @@ def cnn(imagePath, model, training=False):
         for z in range(0, 6):
             for y in range(0, 5):
                 for x in range(0, 5):
-                    if np.random.rand() < 0.05 :
+                    if np.random.rand() < 0.20 :
                         maxpooled2[z][y][x] = 0
 
 
