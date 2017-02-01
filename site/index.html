@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang='nl'>
+    <head>
+        <title>PWS computervisie - Brian en Ren&#233;</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel='stylesheet' href='assets/index.css'>
+        <link href="https://fonts.googleapis.com/css?family=Roboto:100,300" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+        <script type='text/javascript' src='assets/fabric.min.js'></script>
+    </head>
+    <body>
+        <a id='download' href='profielwerkstuk.pdf'>Download het profielwerkstuk&nbsp;<i class="fa fa-cloud-download" aria-hidden="true"></i></a>
+        <header>
+            Profielwerkstuk<br>computervisie<br>
+        </header>
+        <div id='intro'>
+            Voor ons profielwerkstuk over computervisie hebben wij deze interactieve demo voor in de browser gemaakt. 
+            Schrijf op het canvas hiernaast een 0 of een 1 en onze code zal het proberen te herkennen.
+        </div>
+        <canvas id='canvas' width='400' height='400'></canvas>
+        <button id='send'>sturen&nbsp;<i class="fa fa-send" aria-hidden="true"></i></button>
+        <button id='erase'>wissen&nbsp;<i class="fa fa-eraser" aria-hidden="true"></i></button>
+        <div id='graphs'>
+            <div id='divider'></div>
+            <label id='zerolabel'>0</label>
+            <label id='onelabel'>1</label>
+            <div id='zerobar'><label>0%</label></div>
+            <div id='onebar'><label>0%</label></div>
+        </div>
+    </body>
+    <script>
+        var canvas = new fabric.Canvas('canvas');
+        canvas.isDrawingMode = true;
+        canvas.freeDrawingBrush.width = 45;
+        canvas.freeDrawingBrush.color = "rgb(9,9,26)";
+        canvas.backgroundColor="white";
+        canvas.renderAll();
+        document.getElementById('erase').addEventListener('click',function(){
+            canvas.clear();
+            canvas.backgroundColor="white";
+            canvas.renderAll();
+        })   
+        document.getElementById('send').addEventListener('click', function(){
+            if(window.innerWidth < 1100) {
+                window.scrollTo(0,document.body.scrollHeight);
+            }
+            var data = document.getElementById('canvas').toDataURL("image/jpeg");
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var chanceOfZero = Math.round(this.responseText*100);
+                    var chanceOfOne = 100 - chanceOfZero;
+                    document.getElementById('zerobar').getElementsByTagName('label')[0].innerHTML = chanceOfZero + '%';
+                    document.getElementById('onebar').getElementsByTagName('label')[0].innerHTML = chanceOfOne + '%';
+                    document.getElementById('zerobar').style.width = Math.round((chanceOfZero/100)*300) + 'px';
+                    document.getElementById('onebar').style.width = Math.round((chanceOfOne/100)*300) + 'px';
+                }
+            };
+            xhttp.open("post", "ai.php", true);
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+            xhttp.send('img='+data);
+        })
+        
+    </script>
+</html>

@@ -1,0 +1,227 @@
+html, body {
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color:rgb(8, 8, 25);
+    font-family: 'Roboto', sans-serif;
+}
+
+#download {
+    position: absolute;
+    display: block;
+    top: 30px;
+    right: 40px;
+    font-size: 14px;
+    color: white;
+    text-decoration: none;
+}
+
+header {
+    position: absolute;
+    left: 0;
+    top: 15%;
+    padding-left: 100px;
+    line-height: 100px;
+    height: 110px;
+    font-size: 80px;
+    font-weight: lighter;
+    color: white;
+}
+
+#intro {
+    position: absolute;
+    left: 0;
+    padding-left: 100px;
+    top: calc(15% + 230px);
+    width: 40%;
+    color: rgba(255, 255, 255, .8);
+    font-size: 20px;
+    line-height: 26px;
+    font-weight: lighter;
+}
+
+.canvas-container {
+    position: absolute !important;
+    right: 15%;
+    top: 27.5%;
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 10px 7px 0px rgba(50, 50, 50, 0.75);
+}
+
+#send {
+    position: absolute;
+    right: calc(15% + 215px);
+    top: calc(30% + 430px);
+    -webkit-appearance: none;
+    height: 60px;
+    width: 200px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(31,186,214);
+    color: white;
+    font-weight: lighter;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+#erase {
+    position: absolute;
+    right: calc(15% - 15px);
+    top: calc(30% + 430px);
+    -webkit-appearance: none;
+    height: 60px;
+    width: 200px;
+    border: 1px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+    color: white;
+    font-weight: lighter;
+    font-family: 'Roboto', sans-serif;
+    font-size: 18px;
+}
+
+#erase:hover, #send:hover {
+    cursor: pointer;
+}
+
+#graphs {
+    position: absolute;
+    left: 100px;
+    top: 60%;
+    height: 220px;
+    width: 600px;
+}
+
+#divider {
+    position: absolute;
+    left: 50px;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background-color: rgba(255, 255, 255, .75);
+    z-index: 2;
+}
+
+#zerolabel, #onelabel {
+    display: block;
+    position: absolute;
+    color: white;
+    left: 0;
+    width: 50px;
+    height: 110px;
+    line-height: 110px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: lighter;
+}
+
+#zerolabel {
+    top: 0;
+}
+
+#onelabel {
+    top: 110px;
+}
+
+#zerobar {
+    position: absolute;
+    left: 50px;
+    top: 30px;
+    height: 50px;
+    width: 0px;
+    transition: 0.2s linear;
+    background-color: rgb(31, 186, 214);
+    box-shadow: 0px 5px 6px 0px rgba(31, 186, 214, 0.3);
+}
+
+#zerobar label {
+    display: block;
+    position: absolute;
+    right: -50px;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+}
+
+#onebar {
+    position: absolute;
+    left: 50px;
+    top: 140px;
+    height: 50px;
+    width: 0px;
+    transition: 0.2s linear;
+    background-color: rgb(192, 192, 200);
+    box-shadow: 0px 5px 6px 0px rgba(192, 192, 200, 0.3);
+}
+
+#onebar label {
+    display: block;
+    position: absolute;
+    right: -50px;
+    height: 50px;
+    line-height: 50px;
+    color: white;
+}
+
+@media screen and (max-width:  1100px){
+    body {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+    #download {
+        top: 30px;
+        right: 15px;
+        font-size: 13px;
+    }
+    header {
+        left: 0;
+        top: 15%;
+        width: 100%;
+        padding: 0;
+        text-align: center;
+        line-height: 70px;
+        height: 70px;
+        font-size: 50px;
+    }
+    #intro {
+        left: 5%;
+        padding: 0;
+        top: calc(15% + 150px);
+        width: 90%;
+        text-align: center;
+        font-size: 18px;
+        line-height: 23px;
+    }
+    .canvas-container {
+        right: calc(50% - 200px);
+        top: 65%;
+    }
+    
+    #send {
+        right: 10%;
+        top: calc(65% + 430px);
+        width: 80%;
+    }
+    
+    #erase {
+        right: 10%;
+        top: calc(65% + 510px);
+        width: 80%;
+    }
+    
+    #graphs {
+        left: 5px;
+        top: calc(65% + 630px);
+        height: 220px;
+        width: calc(100% - 10px);
+        padding-bottom: 100px;
+    }
+    
+    #divider {
+        height: 220px;
+    }
+}
